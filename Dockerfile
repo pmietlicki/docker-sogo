@@ -2,10 +2,10 @@ FROM            phusion/baseimage
 MAINTAINER	Jens Erat <email@jenserat.de>
 
 # Install Apache, SOGo from repository
-RUN echo "deb http://inverse.ca/ubuntu-nightly trusty trusty" > /etc/apt/sources.list.d/inverse.list && \
-    apt-key adv --keyserver pool.sks-keyservers.net --recv-key FE9E84327B18FF82B0378B6719CDA6A9810273C4 && \
+RUN echo "deb http://packages.inverse.ca/SOGo/nightly/3/ubuntu/ trusty trusty" > /etc/apt/sources.list.d/inverse.list && \
+    apt-key apt-key adv --keyserver keys.gnupg.net --recv-key 0x810273C4 && \
     apt-get update && \
-    apt-get install -y --no-install-recommends gettext-base apache2 sogo sogo-activesync sope4.9-gdl1-postgresql memcached && \
+    apt-get install -y --no-install-recommends apt-transport-https gettext-base apache2 sogo sogo-activesync sope4.9-gdl1-postgresql sope4.9-gdl1-mysql memcached && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Activate required Apache modules
