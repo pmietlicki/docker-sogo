@@ -1,4 +1,4 @@
-FROM            phusion/baseimage
+FROM            phusion/baseimage:master
 MAINTAINER	Jens Erat <email@jenserat.de>
 
 # Install Apache, SOGo from repository
