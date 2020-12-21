@@ -1,5 +1,4 @@
-FROM            phusion/baseimage:master
-MAINTAINER	Jens Erat <email@jenserat.de>
+FROM phusion/baseimage:master
 
 # Install Apache, SOGo from repository
 RUN echo "deb http://inverse.ca/ubuntu-nightly trusty trusty" > /etc/apt/sources.list.d/inverse.list && \
