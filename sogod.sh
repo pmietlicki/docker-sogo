@@ -2,7 +2,7 @@
 
 mkdir -p /var/run/sogo
 touch /var/run/sogo/sogo.pid
-chown sogo:sogo /var/run/sogo/sogo.pid
+chown -R sogo:sogo /var/run/sogo
 
 # Copy distribution config files to /srv as example
 mkdir -p /srv/etc
