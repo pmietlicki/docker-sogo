@@ -1,5 +1,9 @@
 #!/bin/sh
 
+mkdir -p /var/run/sogo
+touch /var/run/sogo/sogo.pid
+chown sogo:sogo /var/run/sogo/sogo.pid
+
 # Copy distribution config files to /srv as example
 mkdir -p /srv/etc
 cp /etc/sogo/sogo.conf /srv/etc/sogo.conf.orig
