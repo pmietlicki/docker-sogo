@@ -2,6 +2,7 @@ FROM phusion/baseimage:master
 
 # Install Apache, SOGo from repository
 RUN apt-get update && \
+    apt-get -o Dpkg::Options::="--force-confold" upgrade -q -y --force-yes && \
     apt-get install -y --no-install-recommends gettext-base apache2 sogo memcached && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
