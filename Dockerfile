@@ -23,7 +23,7 @@ ADD memcached.sh /etc/service/memcached/run
 
 # Make GATEWAY host available, control memcached startup
 RUN mkdir -p /etc/my_init.d
-ADD gateway.sh memcached-control.sh /etc/my_init.d/
+ADD memcached-control.sh /etc/my_init.d/
 
 # Interface the environment
 VOLUME /srv
