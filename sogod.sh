@@ -34,5 +34,5 @@ cp /srv/etc/cron /etc/cron.d/sogo
 if [ $FOREGROUND="NO" ] then
 	LD_PRELOAD=$LD_PRELOAD exec /etc/init.d/sogo start
 else
-	LD_PRELOAD=$LD_PRELOAD exec /sbin/setuser sogo /usr/sbin/sogod -WOUseWatchDog $USEWATCHDOG -WONoDetach YES -WOPort 20000 -WOWorkersCount $WORKERSCOUNT -WOPidFile /var/run/sogo/sogo.pid
+	LD_PRELOAD=$LD_PRELOAD exec /sbin/setuser sogo /usr/sbin/sogod -WOUseWatchDog $USEWATCHDOG -WONoDetach YES -WOPort 20000 -WOPidFile /var/run/sogo/sogo.pid
 fi
