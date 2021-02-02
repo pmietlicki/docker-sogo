@@ -13,15 +13,17 @@ RUN a2enmod headers proxy proxy_http rewrite ssl
 RUN usermod --home /srv/lib/sogo sogo
 
 # Fix memcached not listening on IPv6
-RUN sed -i -e 's/^-l.*/-l localhost/' /etc/memcached.conf
+#RUN sed -i -e 's/^-l.*/-l localhost/' /etc/memcached.conf
 
 ENV LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libssl.so.1.1
+ENV WORKERSCOUNT=1
+ENV USEWATCHDOG=NO
 
 # SOGo daemons
-RUN mkdir /etc/service/sogod /etc/service/apache2 /etc/service/memcached
-ADD sogod.sh /etc/service/sogod/run
-ADD apache2.sh /etc/service/apache2/run
-ADD memcached.sh /etc/service/memcached/run
+mkdir /etc/service/sogod /etc/service/apache2 /etc/service/memcached
+#ADD sogod.sh /etc/service/sogod/run
+#ADD apache2.sh /etc/service/apache2/run
+#ADD memcached.sh /etc/service/memcached/run
 
 # Make GATEWAY host available, control memcached startup
 RUN mkdir -p /etc/my_init.d
