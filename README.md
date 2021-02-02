@@ -4,7 +4,7 @@
 
 This Dockerfile packages SOGo as packaged by Inverse, SOGo's creators, together with Apache 2 and memcached.
 
-There are different flavors of this Docker image, added as tags. To checkout a specific flavor, use `jenserat/docker:[tag]` as image name. By default, `latest` wil be used.
+There are different flavors of this Docker image, added as tags. To checkout a specific flavor, use `pmietlicki/sogo:[tag]` as image name. By default, `latest` wil be used.
 
   - **latest**: normal SOGo release
   - **nightly**: nightly builds, rebuild automatically
@@ -23,7 +23,7 @@ There are different flavors of this Docker image, added as tags. To checkout a s
 
 The image stores configuration, logs and backups in `/srv`, which you should persist somewhere. Example configuration is copied during each startup of the container, which you can adjust for your own use. For creating the initial directory hierarchy and example configuration, simply run the container with the `/srv` volume already exposed or linked, for example using
 
-    docker run -v /srv/sogo:/srv jenserat/sogo
+    docker run -v /srv/sogo:/srv pmietlicki/sogo
 
 As soon as the files are created, stop the image again. You will now find following files:
 
@@ -108,7 +108,7 @@ Run the image in a container, expose ports as needed and making `/srv` permanent
       --publish='127.0.0.1:80:80' \
       --link='sogo-postgresql:db' \
       --volume='/srv/sogo:/srv' \
-      jenserat/sogo
+      pmietlicki/sogo
 
 ## Upgrading and Maintenance
 
@@ -121,6 +121,6 @@ As the image builds on [`phusion/baseimage`](https://github.com/phusion/baseimag
       --publish='127.0.0.1:80:80' \
       --link='sogo-postgresql:db' \
       --volume='/srv/sogo:/srv' \
-      jenserat/sogo /sbin/my_init -- /bin/bash
+      pmietlicki/sogo /sbin/my_init -- /bin/bash
 
 This is fine for running update scripts on the database. To be able to perform persistent changes to the file system (without creating new containers), red the [`phusion/baseimage`](https://github.com/phusion/baseimage-docker) documentation on attaching to the container.
