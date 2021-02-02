@@ -4,6 +4,9 @@ mkdir -p /var/run/sogo
 touch /var/run/sogo/sogo.pid
 chown -R sogo:sogo /var/run/sogo
 
+#Solve libssl bug for Mail View
+LIBSSL_LOCATION=$(find / -type f -name "libssl.so.*" -print -quit);echo "LD_PRELOAD=$LIBSSL_LOCATION" >> /etc/default/sogo
+
 # Copy distribution config files to /srv as example
 mkdir -p /srv/etc
 cp /etc/sogo/sogo.conf /srv/etc/sogo.conf.orig
@@ -22,4 +25,4 @@ cp /etc/cron.d/sogo /srv/etc/cron.orig
 cp /srv/etc/cron /etc/cron.d/sogo
 
 # Run SOGo in foreground
-exec /sbin/setuser sogo /usr/sbin/sogod -WONoDetach YES -WOPidFile /var/run/sogo/sogo.pid
+exec /sbin/setuser sogo LD_PRELOAD=$LIBSSL_LOCATION /usr/sbin/sogod -WONoDetach YES -WOPidFile /var/run/sogo/sogo.pid
