@@ -30,4 +30,5 @@ cp /etc/cron.d/sogo /srv/etc/cron.orig
 cp /srv/etc/cron /etc/cron.d/sogo
 
 # Run SOGo in foreground
-exec /sbin/setuser sogo /usr/sbin/sogod -WOUseWatchDog $USEWATCHDOG -WONoDetach YES -WOPort 20000 -WOWorkersCount $WORKERSCOUNT -WOPidFile /var/run/sogo/sogo.pid
+# /sbin/setuser sogo /usr/sbin/sogod -WOUseWatchDog $USEWATCHDOG -WONoDetach YES -WOPort 20000 -WOWorkersCount $WORKERSCOUNT -WOPidFile /var/run/sogo/sogo.pid
+exec /etc/init.d/sogo start
