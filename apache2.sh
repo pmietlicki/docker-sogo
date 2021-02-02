@@ -11,8 +11,4 @@ cp /etc/apache2/conf-available/SOGo.conf /srv/etc/apache-SOGo.conf.orig
 cp /srv/etc/apache-SOGo.conf /etc/apache2/conf-enabled/SOGo.conf
 
 # Run apache in foreground
-if [ $FOREGROUND="NO" ]; then
-	APACHE_ARGUMENTS="-DNO_DETACH" exec /etc/init.d/apache2 start
-else
-	APACHE_ARGUMENTS="-DNO_DETACH" exec /usr/sbin/apache2ctl start
-fi
+APACHE_ARGUMENTS="-DNO_DETACH" exec /usr/sbin/apache2ctl start
