@@ -5,8 +5,12 @@ touch /var/run/sogo/sogo.pid
 chown -R sogo:sogo /var/run/sogo
 
 #Solve libssl bug for Mail View
-LIBSSL_LOCATION=$(find / -type f -name "libssl.so.*" -print -quit);echo "LD_PRELOAD=$LIBSSL_LOCATION" >> /etc/default/sogo
-export LD_PRELOAD=$LIBSSL_LOCATION
+if [[ -z "${AEGIR_HOSTNAME}" ]]; then
+	LIBSSL_LOCATION=$(find / -type f -name "libssl.so.*" -print -quit);echo "LD_PRELOAD=$LIBSSL_LOCATION" >> /etc/default/sogo
+	export LD_PRELOAD=$LIBSSL_LOCATION
+else
+	echo "LD_PRELOAD=$LD_PRELOAD" >> /etc/default/sogo
+fi
 
 # Copy distribution config files to /srv as example
 mkdir -p /srv/etc
