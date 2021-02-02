@@ -3,7 +3,7 @@ FROM phusion/baseimage:master
 # Install Apache, SOGo from repository
 RUN apt-get update && \
     apt-get -o Dpkg::Options::="--force-confold" upgrade -q -y --force-yes && \
-    apt-get install -y --no-install-recommends gettext-base apache2 sogo memcached && \
+    apt-get install -y --no-install-recommends gettext-base apache2 sogo memcached libssl1.1 && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Activate required Apache modules
@@ -14,6 +14,8 @@ RUN usermod --home /srv/lib/sogo sogo
 
 # Fix memcached not listening on IPv6
 RUN sed -i -e 's/^-l.*/-l localhost/' /etc/memcached.conf
+
+ENV LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libssl.so.1.1
 
 # SOGo daemons
 RUN mkdir /etc/service/sogod /etc/service/apache2 /etc/service/memcached
