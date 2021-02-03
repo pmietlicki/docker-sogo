@@ -122,10 +122,15 @@ For Health Check, you can check "HTTP request returns a successful status (2xx o
 ### Volumes
 I put all the configuration with Config Map named sogo and Config Map values (sogo.conf and apache-SOGo.conf, optionnaly cron, **it is case sensitive**).
 Then for the volumes, I used :
+
+#### Sogo Config Files
+
 * Volume Name : sogo-conf
 * Default Mode : 644
 * Config Map Name : sogo with Items : All keys
 * Mount Point : /srv/etc/
+
+#### Cron (if needed)
 
 * Volume Name : sogo-nfs
 * Persisent Volume Claim : sogo-nfs (a new persistent volume claim with nfs as default provider with Many Nodes Read-Write)
