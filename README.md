@@ -120,7 +120,7 @@ You can also set http_proxy, https_proxy and no_proxy if you are behind a corpor
 For Health Check, you can check "HTTP request returns a successful status (2xx or 3xx)" with a request path to "/SOGo" on port 80
 
 ### Volumes
-I put all the configuration with Config Map named sogo and Config Map values (sogo.conf and apache-SOGo.conf, optionnaly sogo for cron.d, **it is case sensitive**).
+I put all the configuration with Config Map named sogo and Config Map values (sogo.conf and apache-SOGo.conf, optionnaly cron, **it is case sensitive**).
 Then for the volumes, I used :
 * Volume Name : sogo-conf
 * Default Mode : 644
@@ -130,15 +130,6 @@ Then for the volumes, I used :
 * Volume Name : sogo-nfs
 * Persisent Volume Claim : sogo-nfs (a new persistent volume claim with nfs as default provider with Many Nodes Read-Write)
 * Mount Point : /srv
-
-#### cron (if needed)
-* Volume Name : cron-sogo
-* Default Mode : 644
-* Config Map Name : sogo with Items : Select Specific Keys
-* Key : sogo
-* Path : sogo
-* Mode : 644
-* Mount Point : /srv/etc/cron
 
 ### Configuration exemple
 
@@ -235,7 +226,7 @@ Then for the volumes, I used :
         );
     }
 
-#### cron.d/sogo (if needed)
+#### cron (if needed)
     # Sogod cronjobs
     # Vacation messages expiration
     # The credentials file should contain the sieve admin credentials (username:passwd)
