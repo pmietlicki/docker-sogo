@@ -138,7 +138,7 @@ Then for the volumes, I used :
 * Key : sogo
 * Path : sogo
 * Mode : 644
-* Mount Point : /srv/etc/cron.d
+* Mount Point : /srv/etc/cron
 
 ### Configuration exemple
 
