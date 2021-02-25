@@ -1,12 +1,15 @@
 FROM phusion/baseimage:master
 
-# add sources for sogo latest (v5)
+# Add sources for sogo latest (v5)
 RUN echo "deb [trusted=yes] http://www.axis.cz/linux/debian $(lsb_release -sc) sogo-v5" > /etc/apt/sources.list.d/sogo.list
+
+# Fix install problem with this repo
+RUN touch /usr/share/doc/sogo/empty.sh
 
 # Install Apache, SOGo from repository
 RUN apt-get update && \
     apt-get -o Dpkg::Options::="--force-confold" upgrade -q -y --force-yes && \
-    apt-get install -y --no-install-recommends gettext-base apache2 sogo memcached libssl-dev && \
+    apt-get install -y --no-install-recommends gettext-base apache2 sogo sogo-activesync memcached libssl-dev && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Activate required Apache modules
