@@ -1,11 +1,12 @@
-FROM            phusion/baseimage
-MAINTAINER	Jens Erat <email@jenserat.de>
+FROM phusion/baseimage:master
+
+# add sources for sogo latest (v5)
+RUN echo "deb [trusted=yes] http://www.axis.cz/linux/debian focal sogo-v5" > /etc/apt/sources.list.d/sogo.list
 
 # Install Apache, SOGo from repository
-RUN echo "deb http://inverse.ca/ubuntu trusty trusty" > /etc/apt/sources.list.d/inverse.list && \
-    apt-key adv --keyserver pool.sks-keyservers.net --recv-key FE9E84327B18FF82B0378B6719CDA6A9810273C4 && \
-    apt-get update && \
-    apt-get install -y --no-install-recommends gettext-base apache2 sogo sope4.9-gdl1-postgresql sope4.9-gdl1-mysql memcached && \
+RUN apt-get update && \
+    apt-get -o Dpkg::Options::="--force-confold" upgrade -q -y --force-yes && \
+    apt-get install -y --no-install-recommends gettext-base apache2 sogo sogo-activesync memcached libssl-dev && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Activate required Apache modules
@@ -14,8 +15,8 @@ RUN a2enmod headers proxy proxy_http rewrite ssl
 # Move SOGo's data directory to /srv
 RUN usermod --home /srv/lib/sogo sogo
 
-# Fix memcached not listening on IPv6
-RUN sed -i -e 's/^-l.*/-l localhost/' /etc/memcached.conf
+ENV LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libssl.so
+ENV USEWATCHDOG=YES
 
 # SOGo daemons
 RUN mkdir /etc/service/sogod /etc/service/apache2 /etc/service/memcached
@@ -25,7 +26,7 @@ ADD memcached.sh /etc/service/memcached/run
 
 # Make GATEWAY host available, control memcached startup
 RUN mkdir -p /etc/my_init.d
-ADD gateway.sh memcached-control.sh /etc/my_init.d/
+ADD memcached-control.sh /etc/my_init.d/
 
 # Interface the environment
 VOLUME /srv
