@@ -4,6 +4,7 @@ FROM phusion/baseimage:master
 RUN echo "deb [trusted=yes] http://www.axis.cz/linux/debian $(lsb_release -sc) sogo-v5" > /etc/apt/sources.list.d/sogo.list
 
 # Fix install problem with this repo
+RUN mkdir -p /usr/share/doc/sogo
 RUN touch /usr/share/doc/sogo/empty.sh
 
 # Install Apache, SOGo from repository
