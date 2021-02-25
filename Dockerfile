@@ -10,7 +10,7 @@ RUN touch /usr/share/doc/sogo/empty.sh
 # Install Apache, SOGo from repository
 RUN apt-get update && \
     apt-get -o Dpkg::Options::="--force-confold" upgrade -q -y --force-yes && \
-    apt-get install -y --no-install-recommends gettext-base apache2 sogo sogo-activesync memcached libssl-dev && \
+    apt-get install -y --no-install-recommends gettext-base apache2 sogo sogo-activesync sope4.9-gdl1-postgresql memcached libssl-dev && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Activate required Apache modules
