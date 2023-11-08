@@ -1,4 +1,4 @@
-FROM phusion/baseimage:master
+FROM phusion/baseimage
 
 # Install Apache, SOGo from repository
 RUN apt-get update && \
