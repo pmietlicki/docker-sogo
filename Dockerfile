@@ -1,5 +1,4 @@
-FROM phusion/baseimage:master
-
+FROM ubuntu
 # Install Apache, SOGo from repository
 RUN echo "deb http://inverse.ca/ubuntu-nightly trusty trusty" > /etc/apt/sources.list.d/inverse.list && \
     apt-key adv --keyserver pool.sks-keyservers.net --recv-key FE9E84327B18FF82B0378B6719CDA6A9810273C4 && \
