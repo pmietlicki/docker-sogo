@@ -1,4 +1,4 @@
-FROM phusion/baseimage:master
+FROM ubuntu
 
 # Install Apache, SOGo from repository
 RUN echo "deb http://packages.inverse.ca/SOGo/nightly/3/ubuntu/ xenial xenial" > /etc/apt/sources.list.d/inverse.list && \
