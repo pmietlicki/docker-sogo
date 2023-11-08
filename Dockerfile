@@ -1,5 +1,8 @@
 FROM ubuntu
 
+ENV DEBIAN_FRONTEND=noninteractive
+ENV TZ=Europe/Paris
+
 # Install Apache, SOGo from repository
 RUN apt-get update && \
     apt-get -o Dpkg::Options::="--force-confold" upgrade -q -y --force-yes && \
