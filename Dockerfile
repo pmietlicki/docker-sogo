@@ -3,7 +3,7 @@ FROM ubuntu
 ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=Europe/Paris
 
-# Install Apache, SOGo from repository
+# Install Apache, SOGo, and other dependencies
 RUN apt-get update && \
     apt-get -o Dpkg::Options::="--force-confold" upgrade -q -y --force-yes && \
     apt-get install -y --no-install-recommends gettext-base apache2 sogo memcached libssl-dev && \
@@ -18,19 +18,13 @@ RUN usermod --home /srv/lib/sogo sogo
 ENV LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libssl.so
 ENV USEWATCHDOG=YES
 
-# SOGo daemons
-RUN mkdir /etc/service/sogod /etc/service/apache2 /etc/service/memcached
-ADD sogod.sh /etc/service/sogod/run
-ADD apache2.sh /etc/service/apache2/run
-ADD memcached.sh /etc/service/memcached/run
-
-# Make GATEWAY host available, control memcached startup
-RUN mkdir -p /etc/my_init.d
-ADD memcached-control.sh /etc/my_init.d/
+# Configuration scripts for Apache, SOGo, and Memcached
+ADD start.sh /start.sh
+RUN chmod +x /start.sh
 
 # Interface the environment
 VOLUME /srv
 EXPOSE 80 443 8800
 
-# Baseimage init process
-ENTRYPOINT ["/sbin/my_init"]
+# Start script
+ENTRYPOINT ["/start.sh"]
