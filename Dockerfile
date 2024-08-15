@@ -1,6 +1,6 @@
 FROM ubuntu
 
-RUN apt-get update && apt-get install -y lsb-release
+RUN apt-get update && apt-get install -y lsb-release gosu
 
 # Add sources for sogo latest (v5)
 RUN echo "deb [trusted=yes] http://www.axis.cz/linux/debian $(lsb_release -sc) sogo-v5" > /etc/apt/sources.list.d/sogo.list
