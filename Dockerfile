@@ -25,7 +25,7 @@ ENV LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libssl.so
 ENV USEWATCHDOG=YES
 
 # SOGo daemons
-RUN mkdir /etc/service/sogod /etc/service/apache2 /etc/service/memcached
+RUN mkdir -p /etc/service/sogod /etc/service/apache2 /etc/service/memcached
 ADD sogod.sh /etc/service/sogod/run
 ADD apache2.sh /etc/service/apache2/run
 ADD memcached.sh /etc/service/memcached/run
