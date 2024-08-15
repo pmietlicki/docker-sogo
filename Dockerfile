@@ -12,18 +12,8 @@ RUN touch /usr/share/doc/sogo/empty.sh
 # Install Apache, SOGo from repository
 RUN apt-get update && \
     apt-get -o Dpkg::Options::="--force-confold" upgrade -q -y --force-yes && \
-    apt-get install -y --no-install-recommends gettext-base apache2 sogo sogo-activesync sope4.9-gdl1-postgresql memcached libssl-dev && \
+    apt-get install -y --no-install-recommends gettext-base apache2 sogo sogo-activesync libmysqlclient-dev libpq-dev postgresql-client sope4.9-gdl1-mysql sope4.9-gdl1-postgresql memcached libssl-dev && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
-RUN apt-get update && apt-get install -y \
-    libmysqlclient-dev \
-    --no-install-recommends && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
-
-RUN apt-get update && apt-get install -y \
-    libpq-dev postgresql-client \
-    --no-install-recommends && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Activate required Apache modules
 RUN a2enmod headers proxy proxy_http rewrite ssl
