@@ -43,15 +43,16 @@ if ! grep -q "{" /etc/sogo/sogo.conf || ! grep -q "}" /etc/sogo/sogo.conf; then
     exit 1
 fi
 
-# Solve libssl bug for Mail View
-if [[ -z "${LD_PRELOAD}" ]]; then
+# Set the LD_LIBRARY_PATH for SOGo
+echo "LD_LIBRARY_PATH=/usr/lib/sogo:/usr/lib:$LD_LIBRARY_PATH" >> /etc/default/sogo
+
+# Solve the libssl issue for Mail View
+if [ -z "${LD_PRELOAD}" ]; then
     LIBSSL_LOCATION=$(find / -type f -name "libssl.so.*" -print -quit)
     echo "LD_PRELOAD=$LIBSSL_LOCATION" >> /etc/default/sogo
-    echo "LD_LIBRARY_PATH=/usr/local/lib/sogo:/usr/local/lib:$LD_LIBRARY_PATH" >> /etc/default/sogo
     export LD_PRELOAD=$LIBSSL_LOCATION
 else
     echo "LD_PRELOAD=$LD_PRELOAD" >> /etc/default/sogo
-    echo "LD_LIBRARY_PATH=/usr/local/lib/sogo:/usr/local/lib:$LD_LIBRARY_PATH" >> /etc/default/sogo
     export LD_PRELOAD=$LD_PRELOAD
 fi
 
@@ -73,5 +74,5 @@ fi
 if pgrep -x "sogod" > /dev/null; then
     echo "SOGo is already running"
 else
-    exec gosu sogo /usr/local/sbin/sogod -WONoDetach YES
+    exec gosu sogo /usr/sbin/sogod -WONoDetach YES
 fi
