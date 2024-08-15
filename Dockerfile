@@ -16,6 +16,16 @@ RUN LATEST_VERSION=$(curl -s https://api.github.com/repos/Alinto/sogo/releases/l
     echo "deb [signed-by=/usr/share/keyrings/sogo-archive-keyring.gpg] http://packages.sogo.nu/nightly/${LATEST_VERSION}/ubuntu/ $DISTRO $DISTRO" >> /etc/apt/sources.list.d/sogo.list && \
     apt-get update && apt-get install -y sogo
 
+RUN apt-get update && apt-get install -y \
+    libmysqlclient-dev \
+    --no-install-recommends && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+
+RUN apt-get update && apt-get install -y \
+    libpq-dev postgresql-client \
+    --no-install-recommends && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+
 # Activate required Apache modules
 RUN a2enmod headers proxy proxy_http rewrite ssl
 
