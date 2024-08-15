@@ -1,2 +1,2 @@
 #!/bin/sh
-exec /sbin/setuser memcache /usr/bin/memcached -m ${memcached:-64} 
+exec gosu memcache /usr/bin/memcached -m ${memcached:-64}
