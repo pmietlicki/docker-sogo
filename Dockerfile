@@ -1,6 +1,6 @@
 FROM ubuntu
 
-RUN apt-get update && apt-get install -y lsb-release gosu
+RUN apt-get update && apt-get install -y lsb-release gosu supervisor
 
 # Add sources for sogo latest (v5)
 RUN echo "deb [trusted=yes] http://www.axis.cz/linux/debian $(lsb_release -sc) sogo-v5" > /etc/apt/sources.list.d/sogo.list
@@ -30,13 +30,14 @@ ADD sogod.sh /etc/service/sogod/run
 ADD apache2.sh /etc/service/apache2/run
 ADD memcached.sh /etc/service/memcached/run
 
-# Make GATEWAY host available, control memcached startup
-RUN mkdir -p /etc/my_init.d
-ADD memcached-control.sh /etc/my_init.d/
+RUN chmod +x /etc/service/apache2/run /etc/service/sogod/run /etc/service/memcached/run
+
+# Configure supervisord
+COPY supervisord.conf /etc/supervisord.conf
 
 # Interface the environment
 VOLUME /srv
 EXPOSE 80 443 8800
 
 # Baseimage init process
-ENTRYPOINT ["/sbin/my_init"]
+ENTRYPOINT ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
