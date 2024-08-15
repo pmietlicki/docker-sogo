@@ -5,7 +5,7 @@ ENV TZ=Europe/Paris
 
 # Install basic dependencies including lsb-release, curl, jq, and gpg
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends lsb-release wget apt-transport-https gnupg2 curl jq gettext-base apache2 memcached libssl-dev supervisor ca-certificates && \
+    apt-get install -y --no-install-recommends lsb-release wget gosu apt-transport-https gnupg2 curl jq gettext-base apache2 memcached libssl-dev supervisor ca-certificates && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Fetch the latest SOGo version dynamically and configure the repository
