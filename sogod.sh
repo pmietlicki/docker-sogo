@@ -32,4 +32,4 @@ cp /etc/cron.d/sogo /srv/etc/cron.orig
 cp /srv/etc/cron /etc/cron.d/sogo
 
 # Run SOGo in foreground
-LD_PRELOAD=$LD_PRELOAD exec gosu sogo /usr/sbin/sogod -WOUseWatchDog $USEWATCHDOG -WONoDetach YES -WOPort 20000 -WOPidFile /var/run/sogo/sogo.pid 2>&1 | tee /var/log/sogo/sogo.log
+LD_PRELOAD=$LD_PRELOAD exec gosu sogo /usr/sbin/sogod -WOUseWatchDog $USEWATCHDOG -WONoDetach YES -WOPort 20000 -WOPidFile /var/run/sogo/sogo.pid

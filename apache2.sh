@@ -11,4 +11,4 @@ cp /etc/apache2/conf-available/SOGo.conf /srv/etc/apache-SOGo.conf.orig
 cp /srv/etc/apache-SOGo.conf /etc/apache2/conf-enabled/SOGo.conf
 
 # Run apache in foreground
-exec /usr/sbin/apache2ctl -D FOREGROUND 2>&1 | tee /var/log/apache2/apache2.log
+exec /usr/sbin/apache2ctl -D FOREGROUND
