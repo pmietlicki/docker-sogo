@@ -20,7 +20,7 @@ if [ ! -f "$CONFIG_PATH" ]; then
     if [ -n "$MYSQL_HOST" ] && [ -n "$POSTGRESQL_HOST" ]; then
         echo "Error: Both MySQL and PostgreSQL configurations are defined. Please choose one."
         exit 1
-    elif [ -n "$MYSQL_HOST" ]; then
+    elif [ -n "$MYSQL_HOST" ];then
         db_type="mysql"
         db_host="${MYSQL_HOST}"
         db_port="${MYSQL_PORT:-3306}"
@@ -37,8 +37,8 @@ if [ ! -f "$CONFIG_PATH" ]; then
         db_name="${POSTGRESQL_DATABASE:-sogo}"
         db_url="postgresql://${db_user}:${db_password}@${db_host}:${db_port}/${db_name}"
     else
-        echo "Error: Neither MySQL nor PostgreSQL configuration is defined. Please set the database parameters."
-        exit 1
+        db_type="none"
+        echo "No MySQL or PostgreSQL configuration defined. The initial database configuration will remain unchanged."
     fi
 
     # Apply environment variables if they are defined
@@ -70,6 +70,7 @@ if [ ! -f "$CONFIG_PATH" ]; then
         -v signature_placement="${SOGO_MAIL_SIGNATURE_PLACEMENT:-below}" \
         -v forwarding_method="${SOGO_MAIL_MESSAGE_FORWARDING:-inline}" \
         -v logging_level="${SOGO_LOGGING_LEVEL:-debug}" \
+        -v db_type="${db_type}" \
         -v db_url="${db_url}" \
         '{
             gsub(/SOGoIMAPServer = "127.0.0.1";/, "SOGoIMAPServer = \"" imap "\";");
@@ -101,8 +102,10 @@ if [ ! -f "$CONFIG_PATH" ]; then
             gsub(/SOGoMailMessageForwarding = inline;/, "SOGoMailMessageForwarding = " forwarding_method ";");
             gsub(/SOGoLoggingLevel = debug;/, "SOGoLoggingLevel = \"" logging_level "\";");
 
-            # Replace MySQL or PostgreSQL URLs
-            gsub(/mysql:\/\/sogo:sogoPassword@host.docker.internal:3306\/sogo/, db_url);
+            # Replace MySQL or PostgreSQL URLs only if a database type is specified
+            if (db_type != "none") {
+                gsub(/mysql:\/\/sogo:sogoPassword@host.docker.internal:3306\/sogo/, db_url);
+            }
 
             print;
         }' "$CONFIG_PATH" > "$CONFIG_PATH.tmp" && mv "$CONFIG_PATH.tmp" "$CONFIG_PATH"
@@ -112,6 +115,7 @@ if [ ! -f "$CONFIG_PATH" ]; then
 else
     echo "Using existing personalized SOGo configuration."
 fi
+
 
 # Ensure that the configuration is applied
 cp "$CONFIG_PATH" /etc/sogo/sogo.conf
