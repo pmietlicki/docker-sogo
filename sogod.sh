@@ -116,7 +116,6 @@ else
     echo "Using existing personalized SOGo configuration."
 fi
 
-
 # Ensure that the configuration is applied
 cp "$CONFIG_PATH" /etc/sogo/sogo.conf
 
